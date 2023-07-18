@@ -18,7 +18,7 @@ export const Navbar = () => {
             <FaBars />
           </button>
         </div>
-        <ul className=" gap-2 hidden sm:flex lg:gap-4">
+        <ul className=" gap-6 hidden sm:flex lg:gap-8">
           {navLinks.map(({ id, text, url }) => {
             return (
               <li key={id}>
