@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import BannerImg from "../../assets/banner.jpg";
+import { LinkButton } from "../LinkButton/LinkButton";
 export const Banner = () => {
   return (
-    <section className="w-11/12 sm:container flex bg-teal-200 mx-auto my-4 md:my-8 ">
+    <section className="w-11/12 sm:container flex mx-auto my-4 md:my-8 items-center">
       <article className="md:w-1/2 py-16 px-4 ">
         <h1 className="text-4xl md:text-5xl">
           design your <br />
@@ -14,9 +16,11 @@ export const Banner = () => {
           aperiam odio ducimus, obcaecati libero et quia tempora excepturi quis
           alias?
         </p>
-        <Link to="/products">shop now</Link>
+        <LinkButton text="Shop Now" url="/products" />
       </article>
-      <article className="hidden md:block"></article>
+      <article className="hidden md:block md:w-1/2 overflow-hidden h-[50rem] ">
+        <img src={BannerImg} alt="banner" />
+      </article>
     </section>
   );
 };

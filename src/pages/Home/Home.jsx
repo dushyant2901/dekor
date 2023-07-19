@@ -1,12 +1,12 @@
 import React from "react";
-import { Banner, Categories } from "../../components";
+import { Banner, Catalogue, Categories } from "../../components";
 
 export const Home = () => {
   return (
     <main className="h-screen">
       <Banner />
-      <Categories />
-      <Categories />
+      <Catalogue title="Shop By Categories" />
+      <Catalogue title="Shop By Brands" />
     </main>
   );
 };
