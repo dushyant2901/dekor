@@ -1,5 +1,12 @@
 import React from "react";
+import { Banner, Categories } from "../../components";
 
 export const Home = () => {
-  return <div>Home</div>;
+  return (
+    <main className="h-screen">
+      <Banner />
+      <Categories />
+      <Categories />
+    </main>
+  );
 };
