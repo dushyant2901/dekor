@@ -10,6 +10,7 @@ import { CatalogueCard } from "./CatalogueCard/CatalogueCard";
 import { ProductCard } from "./ProductCard/ProductCard";
 import { Filters } from "./Filters/Filters";
 import { LinkButton } from "./LinkButton/LinkButton";
+import { Loader } from "./Loader/Loader";
 export {
   Navbar,
   Sidebar,
@@ -23,4 +24,5 @@ export {
   ProductCard,
   Filters,
   LinkButton,
+  Loader,
 };
