@@ -1,7 +1,11 @@
 import axios from "axios";
 import React, { useContext, useEffect, useReducer } from "react";
 
-import { getAllProducts, getProduct } from "../services/productServices";
+import {
+  getAllProductsService,
+  getProductService,
+  getAllCategoriesService,
+} from "../services/productServices";
 
 import { productsReducer } from "../reducers/productsReducer";
 
@@ -11,6 +15,10 @@ import {
   GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_ERROR,
+  GET_SINGLE_PRODUCT_BEGIN,
+  GET_SINGLE_PRODUCT_SUCCESS,
+  GET_SINGLE_PRODUCT_ERROR,
+  GET_ALL_CATEGORIES,
 } from "../utils/actions";
 
 const initialProductsState = {
@@ -18,6 +26,10 @@ const initialProductsState = {
   productsLoading: false,
   productsError: false,
   products: [],
+  singleProduct: null,
+  singleProductLoading: false,
+  singleProductError: false,
+  categories: [],
 };
 
 const ProductsContext = React.createContext();
@@ -41,15 +53,42 @@ export const ProductsProvider = ({ children }) => {
       const {
         status,
         data: { products },
-      } = await getAllProducts();
+      } = await getAllProductsService();
       productsDispatch({ type: GET_PRODUCTS_SUCCESS, payload: products });
     } catch (error) {
       productsDispatch({ type: GET_PRODUCTS_ERROR });
     }
   };
 
+  const fetchSingleProduct = async (productID) => {
+    productsDispatch({ type: GET_SINGLE_PRODUCT_BEGIN });
+    try {
+      const {
+        data: { product: singleProduct },
+        status,
+      } = await getProductService(productID);
+      productsDispatch({
+        type: GET_SINGLE_PRODUCT_SUCCESS,
+        payload: singleProduct,
+      });
+    } catch (error) {
+      productsDispatch({ type: GET_SINGLE_PRODUCT_ERROR });
+    }
+  };
+  const fetchAllCategories = async () => {
+    try {
+      const {
+        res,
+        data: { categories },
+      } = await getAllCategoriesService();
+      productsDispatch({ type: GET_ALL_CATEGORIES, payload: categories });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     fetchProducts();
+    fetchAllCategories();
   }, []);
 
   return (
@@ -58,6 +97,7 @@ export const ProductsProvider = ({ children }) => {
         ...productsState,
         openSidebar,
         closeSidebar,
+        fetchSingleProduct,
       }}
     >
       {children}
