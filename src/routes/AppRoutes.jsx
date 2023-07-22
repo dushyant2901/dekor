@@ -9,8 +9,11 @@ import {
   Cart,
   Wishlist,
   Checkout,
+  Signup,
+  Login,
 } from "../pages";
 import { Layout } from "../Layout/Layout";
+import { RequiresAuth } from "./RequiresAuth";
 export const AppRoutes = () => {
   return (
     <>
@@ -18,11 +21,34 @@ export const AppRoutes = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="wishlist" element={<Wishlist />} />
+          <Route
+            path="cart"
+            element={
+              <RequiresAuth>
+                <Cart />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path="wishlist"
+            element={
+              <RequiresAuth>
+                <Wishlist />
+              </RequiresAuth>
+            }
+          />
           <Route path="products" element={<Products />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="login" element={<Login />} />
           <Route path="products/:id" element={<SingleProduct />} />
-          <Route path="checkout" element={<Checkout />} />
+          <Route
+            path="checkout"
+            element={
+              <RequiresAuth>
+                <Checkout />
+              </RequiresAuth>
+            }
+          />
           <Route path="*" element={<Error />} />
         </Route>
       </Routes>
