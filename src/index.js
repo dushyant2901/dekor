@@ -7,7 +7,7 @@ import { makeServer } from "./server";
 import { ProductsProvider } from "./context/productContext";
 import { FilterProvider } from "./context/filterContext";
 import { AuthProvider } from "./context/authContext";
-
+import { CartProvider } from "./context/cartContext";
 makeServer();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -17,7 +17,9 @@ root.render(
       <AuthProvider>
         <ProductsProvider>
           <FilterProvider>
-            <App />
+            <CartProvider>
+              <App />
+            </CartProvider>
           </FilterProvider>
         </ProductsProvider>
       </AuthProvider>
