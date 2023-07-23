@@ -3,7 +3,7 @@ import { useAuth } from "../../context/authContext";
 import { Link } from "react-router-dom";
 export const Login = () => {
   const [loginDetails, setLoginDetails] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -15,11 +15,13 @@ export const Login = () => {
   };
 
   const handleLoginBtn = (e) => {
-    // e.preventDefault();
-    if (!loginDetails.username && !loginDetails.password) {
+    e.preventDefault();
+    if (loginDetails.email === "" && loginDetails.password === "") {
       // toast.error("Kindly fill all the fields!!");
+      console.log("first");
       return;
     }
+    console.log(" hrl");
     loginHandler({ ...loginDetails });
   };
 
@@ -30,10 +32,7 @@ export const Login = () => {
 
   return (
     <article className="bg-lightPrimary absolute inset-0 flex items-center justify-center">
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className=" border border-primary p-8 flex flex-col gap-2 bg-white rounded-md shadow-md"
-      >
+      <form className=" border border-primary p-8 flex flex-col gap-2 bg-white rounded-md shadow-md">
         <h5 className="text-xl md:text-2xl text-center mb-6">Login</h5>
         <div className="flex flex-col gap-4">
           <label htmlFor="email" className="text-lg md:text-xl">

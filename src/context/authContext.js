@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../services/authService/loginService";
 import { signUpService } from "../services/authService/signUpService";
@@ -7,9 +7,18 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const localStorageToken = JSON.parse(localStorage.getItem("authItems"));
+  const localStorageToken = JSON.parse(localStorage.getItem("user"));
   const [token, setToken] = useState(localStorageToken?.token);
   const [loggedUser, setLoggedUser] = useState(localStorageToken?.user);
+
+  // useEffect(() => {
+  //   const loggedInUser = JSON.parse(localStorage.getItem("user"));
+  //   if (loggedInUser) {
+  //     setLoggedUser(loggedInUser?.user);
+  //     setToken(loggedInUser.token);
+  //     navigate("/");
+  //   }
+  // }, []);
 
   const loginHandler = async (userDetails) => {
     try {
@@ -39,8 +48,6 @@ export const AuthProvider = ({ children }) => {
         // toast.error("Something went wrong");
       }
       console.error(error);
-    } finally {
-      // setIsLoading(false);
     }
   };
 
@@ -81,8 +88,6 @@ export const AuthProvider = ({ children }) => {
         // toast.error("Something went wrong");
       }
       console.error(error);
-    } finally {
-      // setIsLoading(false);
     }
   };
 
