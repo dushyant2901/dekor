@@ -11,7 +11,7 @@ import {
 import { cartReducer } from "../reducers/cartReducer";
 import { useNavigate } from "react-router-dom";
 const initialCartState = {
-  cart: null,
+  cart: [],
   totalPrice: 0,
   totalQuantity: 0,
 };
