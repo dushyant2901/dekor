@@ -2,23 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdFavorite, MdStar, MdFavoriteBorder } from "react-icons/md";
 import { useCart } from "../../context/cartContext";
+import { useWishlist } from "../../context/wishlistContext";
+import { isAlreadyInCart, isAlreadyInWishlist } from "../../utils/helpers";
 export const ProductCard = (product) => {
   const { name, image, _id: id, price, rating } = product;
   const { cart, addToCart } = useCart();
-  const isAlreadyInCart = (cart, productId) =>
-    cart?.some(({ _id }) => _id === productId);
-  const isAlreadyInWishlist = true;
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
+
   return (
     <article className="border border-primary border-s rounded-md shadow-md hover:shadow-xl overflow-hidden ">
       <Link to={`/products/${id}`}>
         <header className="relative">
           <img src={image} alt={name} className="w-52 md:w-60" />
-          {isAlreadyInWishlist ? (
-            <button className="absolute top-3 right-3 text-2xl text-red-500 ">
+          {isAlreadyInWishlist(wishlist, id) ? (
+            <button
+              className="absolute top-3 right-3 text-2xl text-red-500 "
+              onClick={() => removeFromWishlist(id)}
+            >
               <MdFavorite />
             </button>
           ) : (
-            <button className="absolute top-3 right-3 text-2xl ">
+            <button
+              className="absolute top-3 right-3 text-2xl "
+              onClick={() => addToWishlist(product)}
+            >
               <MdFavoriteBorder />
             </button>
           )}

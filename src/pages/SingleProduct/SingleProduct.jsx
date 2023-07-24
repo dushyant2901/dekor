@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useProducts } from "../../context/productContext";
 import { useParams } from "react-router-dom";
 import { LinkButton, Loader } from "../../components";
-
+import { useCart } from "../../context/cartContext";
+import { useWishlist } from "../../context/wishlistContext";
+import { isAlreadyInCart, isAlreadyInWishlist } from "../../utils/helpers";
 export const SingleProduct = () => {
   const {
     singleProduct: product,
@@ -10,6 +12,8 @@ export const SingleProduct = () => {
     singleProductError: error,
     fetchSingleProduct,
   } = useProducts();
+  const { addToCart, cart } = useCart();
+  const { addToWishlist, wishlist, removeFromWishlist } = useWishlist();
 
   const { id: productId } = useParams();
   console.log({ productId });
@@ -28,8 +32,7 @@ export const SingleProduct = () => {
     company,
     image,
   } = product ?? {};
-  const isAlreadyInCart = false;
-  const isAlreadyInWishlist = false;
+
   return (
     <main>
       {isLoading && <Loader />}
@@ -60,16 +63,22 @@ export const SingleProduct = () => {
                 {company}
               </p>
               <div>
-                {isAlreadyInCart ? (
+                {isAlreadyInCart(cart, productId) ? (
                   <LinkButton text="Go to Cart" />
                 ) : (
-                  <LinkButton text="Add to Cart" />
+                  <button onClick={() => addToCart(product)}>
+                    Add To Cart
+                  </button>
                 )}
 
-                {isAlreadyInWishlist ? (
-                  <LinkButton text="Remove from wishlist" />
+                {isAlreadyInWishlist(wishlist, productId) ? (
+                  <button onClick={() => removeFromWishlist(productId)}>
+                    Remove From Wishlist
+                  </button>
                 ) : (
-                  <LinkButton text="Add to Wishlist" />
+                  <button onClick={() => addToWishlist(product)}>
+                    Add To Wishlist
+                  </button>
                 )}
               </div>
             </article>
