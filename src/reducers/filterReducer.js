@@ -3,6 +3,8 @@ import {
   UPDATE_FILTERS,
   FILTER_PRODUCTS,
   CLEAR_FILTERS,
+  UPDATE_SORT,
+  SORT_PRODUCTS,
 } from "../utils/actions";
 
 export const filterReducer = (state, { type, payload }) => {
@@ -59,6 +61,27 @@ export const filterReducer = (state, { type, payload }) => {
         shipping: false,
       },
     };
+  }
+  if (type === UPDATE_SORT) {
+    return { ...state, sort: payload };
+  }
+  if (type === SORT_PRODUCTS) {
+    const { sort, filteredProducts } = state;
+    let _products = [];
+    if (sort === "price-lowest") {
+      _products = filteredProducts.sort((a, b) => a.price - b.price);
+    }
+    if (sort === "price-highest") {
+      _products = filteredProducts.sort((a, b) => b.price - a.price);
+    }
+    if (sort === "name-a") {
+      _products = filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    if (sort === "name-z") {
+      _products = filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    return { ...state, filteredProducts: _products };
   }
   throw new Error(`No Matching "${type}" - action type`);
 };

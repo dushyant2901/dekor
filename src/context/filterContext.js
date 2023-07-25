@@ -4,6 +4,8 @@ import {
   CLEAR_FILTERS,
   LOAD_PRODUCTS,
   FILTER_PRODUCTS,
+  UPDATE_SORT,
+  SORT_PRODUCTS,
 } from "../utils/actions";
 import { filterReducer } from "../reducers/filterReducer";
 import { useProducts } from "./productContext";
@@ -13,15 +15,14 @@ const initialFilterState = {
   filteredProducts: [],
   filters: {
     text: "",
-
     category: "all",
-
     minPrice: 0,
     maxPrice: 0,
     price: 0,
     shipping: false,
     rating: "all",
   },
+  sort: "price-lowest",
 };
 
 const FilterContext = React.createContext();
@@ -38,7 +39,8 @@ export const FilterProvider = ({ children }) => {
 
   useEffect(() => {
     filterDispatch({ type: FILTER_PRODUCTS });
-  }, [filterState?.filters]);
+    filterDispatch({ type: SORT_PRODUCTS });
+  }, [filterState?.filters, filterState?.sort]);
 
   const updateFilters = (e) => {
     let { name, value } = e.target;
@@ -58,13 +60,19 @@ export const FilterProvider = ({ children }) => {
     filterDispatch({ type: CLEAR_FILTERS });
     toast.success("All Filters Cleared !!!");
   };
+
+  const updateSort = (e) => {
+    const { value } = e.target;
+    filterDispatch({ type: UPDATE_SORT, payload: value });
+  };
   return (
     <FilterContext.Provider
       value={{
         ...filterState,
-
+        filterDispatch,
         updateFilters,
         clearFilters,
+        updateSort,
       }}
     >
       {children}
