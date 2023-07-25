@@ -1,4 +1,9 @@
-import { LOAD_CART, ADD_TO_CART, REMOVE_FROM_CART } from "../utils/actions";
+import {
+  LOAD_CART,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  UPDATE_CART_QTY,
+} from "../utils/actions";
 
 export const cartReducer = (state, { type, payload }) => {
   if (type === LOAD_CART) {
@@ -20,6 +25,13 @@ export const cartReducer = (state, { type, payload }) => {
     return {
       ...state,
       cart: state.cart.filter(({ _id }) => _id !== payload),
+    };
+  }
+  if (type === UPDATE_CART_QTY) {
+    console.log({ payload, from: "update from cart" });
+    return {
+      ...state,
+      cart: payload,
     };
   }
 

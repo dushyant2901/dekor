@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useReducer } from "react";
 import { useAuth } from "./authContext";
-import { ADD_TO_CART, LOAD_CART, REMOVE_FROM_CART } from "../utils/actions";
+import {
+  ADD_TO_CART,
+  LOAD_CART,
+  REMOVE_FROM_CART,
+  UPDATE_CART_QTY,
+} from "../utils/actions";
 import {
   addToCartService,
   getUserCartService,
@@ -21,16 +26,17 @@ export const CartProvider = ({ children }) => {
   const navigate = useNavigate();
   const { token, loggedUser } = useAuth();
   useEffect(() => {
+    if (!token) return;
     const getUserCart = async () => {
       try {
         const {
           status,
           data: { cart },
         } = await getUserCartService(token);
-        if (status === 200) {
+        if (status === 200 || status === 201) {
           cartDispatch({ type: LOAD_CART, payload: cart });
         }
-      } catch (e) {
+      } catch (error) {
         console.log(error);
       }
     };
@@ -47,7 +53,7 @@ export const CartProvider = ({ children }) => {
         status,
         // data: { cart },
       } = await addToCartService(product, token);
-      if (status === 201) {
+      if (status === 200 || status === 201) {
         cartDispatch({ type: ADD_TO_CART, payload: product });
         toast.success("Added To Cart !!!");
       }
@@ -71,19 +77,45 @@ export const CartProvider = ({ children }) => {
       toast.error("Something Went Wrong !!!");
     }
   };
-  const updateCartItemQty = async (id, type) => {
+  // const updateCartItemQty = async (id, type) => {
+  //   try {
+  //     const res = await updateCartItemQtyService({ id, type }, token);
+  //     if (res.status === 200 || res.status === 201) {
+  //       const dataFetched = await res.json();
+  //       console.log({ dataFetched });
+  //       //  setCartData(dataFetched?.cart);
+  //       toast.success("Went Wrong !!!");
+  //     }
+  //   } catch (error) {
+  //     toast.error("Something Went Wrong !!!");
+  //   }
+  // };
+  const updateCartItemQty = async (productId, type) => {
     try {
-      const res = await updateCartItemQtyService({ id, type }, token);
-      if (res.status === 200 || res.status === 201) {
-        const dataFetched = await res.json();
-        console.log({ dataFetched });
-        //  setCartData(dataFetched?.cart);
+      const response = await updateCartItemQtyService(productId, token, type);
+      const {
+        status,
+        data: { cart },
+      } = response;
+      if (status === 200) {
+        // if (type === "increment")
+        //   setCartManager({ type: "INCREASEQUANT", payload: cart });
+        // else setCartManager({ type: "DECREASEQUANT", payload: cart });
+        cartDispatch({ type: UPDATE_CART_QTY, payload: cart });
+        toast.success(
+          type === "increment"
+            ? `Cart quantity increased successfully!`
+            : `Cart quantity decreased successfully!`
+          // {
+          //   position: toast.POSITION.BOTTOM_RIGHT,
+          // }
+        );
       }
     } catch (error) {
-      toast.error("Something Went Wrong !!!");
+      toast.error(error.message);
+      console.log(error);
     }
   };
-
   return (
     <CartContext.Provider
       value={{

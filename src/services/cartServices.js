@@ -25,10 +25,15 @@ export const removeFromCartService = async (productId, encodedToken) =>
     },
   });
 
-export const updateCartItemQtyService = async ({ id, type }, encodedToken) =>
-  await axios.post(`/api/user/cart/${id}`, {
-    headers: {
-      authorization: encodedToken,
+export const updateCartItemQtyService = async (productId, encodedToken, type) =>
+  await axios.post(
+    `/api/user/cart/${productId}`,
+    {
+      action: { type },
     },
-    body: JSON.stringify({ action: { type } }),
-  });
+    {
+      headers: {
+        authorization: encodedToken,
+      },
+    }
+  );
