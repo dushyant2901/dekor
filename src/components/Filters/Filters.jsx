@@ -1,7 +1,6 @@
 import React from "react";
 import { useFilter } from "../../context/filterContext";
 import { useProducts } from "../../context/productContext";
-import { MdStar } from "react-icons/md";
 export const Filters = () => {
   const { filters, updateFilters, clearFilters } = useFilter();
   const { categories } = useProducts();
@@ -9,26 +8,13 @@ export const Filters = () => {
     "all",
     ...categories.map(({ categoryName }) => categoryName),
   ];
-  const { text, category, rating, minPrice, price, maxPrice } = filters ?? {};
+  const { category, rating, minPrice, price, maxPrice } = filters ?? {};
   const ratings = ["all", "1", "2", " 3", "4", " 5"];
   const formatPrice = (val) => val;
   return (
     <>
       <div className="w-2/3 md:w-auto  ">
         <form onSubmit={(e) => e.preventDefault()}>
-          {/* search input */}
-          <div>
-            <input
-              type="text"
-              name="text"
-              value={text}
-              placeholder="search"
-              onChange={updateFilters}
-              className="w-full p-1 border border-primary outline-none
-              text-md text-black font-bold mb-3 md:mb-6"
-            />
-          </div>
-          {/* end of search input */}
           {/* category */}
           <div className="my-2.5">
             <h5 className="text-xl mb-1.5 md:mb-2 md:text-2xl">Category</h5>

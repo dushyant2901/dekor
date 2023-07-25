@@ -1,9 +1,12 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
 import { links as navLinks } from "../../utils/constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CartButtons } from "../CartButtons/CartButtons";
+import { useFilter } from "../../context/filterContext";
 export const Navbar = () => {
+  const { filters, updateFilters } = useFilter();
+  const navigate = useNavigate();
   return (
     <nav className="w-screen">
       <section
@@ -18,7 +21,7 @@ export const Navbar = () => {
             <FaBars />
           </button>
         </div>
-        <ul className=" gap-6 hidden md:flex lg:gap-8">
+        <ul className=" gap-6 hidden md:flex lg:gap-8 items-center">
           {navLinks.map(({ id, text, url }) => {
             return (
               <li key={id}>
@@ -29,8 +32,20 @@ export const Navbar = () => {
             );
           })}
         </ul>{" "}
-        <div className="hidden md:flex">
-          <CartButtons />
+        <div className="flex gap-6 items-center">
+          <input
+            onClick={() => navigate("/products")}
+            type="text"
+            name="text"
+            value={filters?.text}
+            placeholder="search"
+            onChange={updateFilters}
+            className="w-64 p-1 border border-primary outline-none
+              text-md text-black font-bold mb-3 md:mb-6"
+          />
+          <div className="hidden md:flex md:items-center">
+            <CartButtons />
+          </div>
         </div>
       </section>
     </nav>
