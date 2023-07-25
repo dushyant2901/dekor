@@ -1,12 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loginService } from "../services/authService/loginService";
 import { signUpService } from "../services/authService/signUpService";
+import { toast } from "react-hot-toast";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const localStorageToken = JSON.parse(localStorage.getItem("user"));
   const [token, setToken] = useState(localStorageToken?.token);
   const [loggedUser, setLoggedUser] = useState(localStorageToken?.user);
@@ -34,18 +35,20 @@ export const AuthProvider = ({ children }) => {
         );
         setToken(encodedToken);
         setLoggedUser(foundUser);
-        navigate("/products");
+        navigate(location?.state?.from?.pathname || "/products", {
+          replace: true,
+        });
       } else {
-        // notifyToast("error", "Something is Wrong!");
+        toast.error("Something went wrong !!!");
       }
     } catch (error) {
       const {
         response: { status },
       } = error;
       if (status === 422) {
-        // toast.error("Username Already Exists. Please choose another one.");
+        toast.error("Username Already Exists. Please choose another one.");
       } else {
-        // toast.error("Something went wrong");
+        toast.error("Something went wrong");
       }
       console.error(error);
     }
@@ -73,19 +76,21 @@ export const AuthProvider = ({ children }) => {
         );
         setToken(encodedToken);
         setLoggedUser(createdUser);
-        navigate("/products");
-        // notifyToast("success", "Succesfully Signed Up!");
+        navigate(location?.state?.from?.pathname || "/products", {
+          replace: true,
+        });
+        toast.success("Successfully Signed Up !!!");
       } else {
-        // notifyToast("error", "Something is Wrong!");
+        toast.error("Something Went Wrong !!!");
       }
     } catch (error) {
       const {
         response: { status },
       } = error;
       if (status === 422) {
-        // toast.error("Username Already Exists. Please choose another one.");
+        toast.error("Username Already Exists. Please choose another one.");
       } else {
-        // toast.error("Something went wrong");
+        toast.error("Something went wrong");
       }
       console.error(error);
     }
@@ -108,79 +113,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
-
-// const signUpHandler = async (userdetails) => {
-//   setIsLoading(true);
-//   try {
-//     const {
-//       status,
-//       data: { encodedToken, createdUser },
-//     } = await signUpService({ ...userdetails });
-
-//     if (status === 201) {
-//       localStorage.setItem("token", encodedToken);
-//       const { username, name, profileImg, _id } = createdUser;
-
-//       const currentUser = { username, name, profileImg, _id };
-//       setIsUserLoggedIn(true);
-//       localStorage.setItem("userData", JSON.stringify(currentUser));
-//       setToken(encodedToken);
-//       setCurrentUser(currentUser);
-//       toast.success(`Hi, ${createdUser.firstName}!`, {
-//         icon: "👋",
-//       });
-//       console.log({ createdUser });
-//       navigate("/", { replace: true });
-//     }
-//   } catch (error) {
-//     const {
-//       response: { status },
-//     } = error;
-//     if (status === 422) {
-//       toast.error("Username Already Exists. Please choose another one.");
-//     } else {
-//       toast.error("Something went wrong");
-//     }
-//     console.error(error);
-//   } finally {
-//     setIsLoading(false);
-//   }
-// };
-
-// const loginHandler = async (userDetails) => {
-//   setIsLoading(true);
-//   try {
-//     const {
-//       status,
-//       data: { foundUser, encodedToken },
-//     } = await loginService({ ...userDetails });
-
-//     if (status === 200) {
-//       localStorage.setItem("token", encodedToken);
-//       const { username, name, profileImg, _id } = foundUser;
-
-//       const currentUser = { username, name, profileImg, _id };
-
-//       localStorage.setItem("userData", JSON.stringify(currentUser));
-//       setCurrentUser(currentUser);
-//       setToken(encodedToken);
-//       setIsUserLoggedIn(true);
-//       toast.success(`Welcome back, ${currentUser.name}!`, { icon: "👋" });
-//       navigate(location?.state?.from?.pathname || "/", { replace: true });
-//     }
-//   } catch (error) {
-//     const {
-//       response: { status },
-//     } = error;
-//     if (status === 404) {
-//       toast.error("The username you entered is not registered.");
-//     } else if (status === 401) {
-//       toast.error("The credentials you entered are invalid. Please try again.");
-//     } else {
-//       toast.error("Something went wrong");
-//     }
-//     console.error(error);
-//   } finally {
-//     setIsLoading(false);
-//   }
-// };

@@ -26,7 +26,9 @@ export const Cart = () => {
         ))}
         {cart.length > 0 && <CartTotal />}
         {loggedUser && cart.length > 0 && (
-          <LinkButton text="checkout" to="/checkout" />
+          <div className="w-28">
+            <LinkButton text="checkout" to="/checkout" />
+          </div>
         )}
       </section>
     </main>

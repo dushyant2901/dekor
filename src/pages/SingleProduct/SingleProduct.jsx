@@ -12,26 +12,18 @@ export const SingleProduct = () => {
     singleProductError: error,
     fetchSingleProduct,
   } = useProducts();
+
   const { addToCart, cart } = useCart();
+
   const { addToWishlist, wishlist, removeFromWishlist } = useWishlist();
 
   const { id: productId } = useParams();
-  console.log({ productId });
+
   useEffect(() => {
     fetchSingleProduct(productId);
   }, [productId]);
-  console.log({ product });
-  const {
-    name,
-    price,
-    description,
-    stock,
-    stars,
-    reviews,
-    category,
-    company,
-    image,
-  } = product ?? {};
+
+  const { name, price, description, category, image } = product ?? {};
 
   return (
     <main>
@@ -46,37 +38,41 @@ export const SingleProduct = () => {
             <article className="block md:w-1/2 overflow-hidden h-[50rem] ">
               <img src={image} alt={name} />
             </article>
-            <article className="md:w-1/2">
-              <h2>{name}</h2>
+            <article className="md:w-1/2 flex flex-col gap-4">
+              <h2 className="text-xl">{name}</h2>
 
-              <h5>{price}</h5>
-              <h5>{category}</h5>
+              <h5 className="text-lg">Rs {price}</h5>
+              <h5 className="text-lg">
+                <span>Category : </span>
+                {category}
+              </h5>
 
-              <p>{description}</p>
-              <p>
-                <span>Available : </span>
-                {stock > 0 ? "In stock" : "out of stock"}
-              </p>
+              <p className="text-lg w-3/4">{description}</p>
 
-              <p>
-                <span>Brand :</span>
-                {company}
-              </p>
-              <div>
+              <div className="my-4 flex gap-5">
                 {isAlreadyInCart(cart, productId) ? (
                   <LinkButton text="Go to Cart" />
                 ) : (
-                  <button onClick={() => addToCart(product)}>
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5 w-max  "
+                  >
                     Add To Cart
                   </button>
                 )}
 
                 {isAlreadyInWishlist(wishlist, productId) ? (
-                  <button onClick={() => removeFromWishlist(productId)}>
+                  <button
+                    onClick={() => removeFromWishlist(productId)}
+                    className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5 w-max  "
+                  >
                     Remove From Wishlist
                   </button>
                 ) : (
-                  <button onClick={() => addToWishlist(product)}>
+                  <button
+                    onClick={() => addToWishlist(product)}
+                    className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5 w-max  "
+                  >
                     Add To Wishlist
                   </button>
                 )}

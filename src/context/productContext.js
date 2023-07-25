@@ -77,7 +77,6 @@ export const ProductsProvider = ({ children }) => {
       }
     } catch (error) {
       productsDispatch({ type: GET_SINGLE_PRODUCT_ERROR });
-      toast.error("Something Went Wrong !!!");
     }
   };
   const fetchAllCategories = async () => {

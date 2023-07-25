@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/authContext";
 import { Link } from "react-router-dom";
+import { guestLoginDetails } from "../../utils/constants";
+import { toast } from "react-hot-toast";
+
 export const Login = () => {
   const [loginDetails, setLoginDetails] = useState({
     email: "",
@@ -17,17 +20,15 @@ export const Login = () => {
   const handleLoginBtn = (e) => {
     e.preventDefault();
     if (loginDetails.email === "" && loginDetails.password === "") {
-      // toast.error("Kindly fill all the fields!!");
-      console.log("first");
+      toast.error("Kindly fill all the fields!!");
       return;
     }
-    console.log(" hrl");
     loginHandler({ ...loginDetails });
   };
 
   const handleGuestLoginBtn = (e) => [
-    // e.preventDefault(),
-    // loginHandler({ ...guestLoginDetails }),
+    e.preventDefault(),
+    loginHandler({ ...guestLoginDetails }),
   ];
 
   return (
@@ -62,10 +63,26 @@ export const Login = () => {
             className="text-lg md:text-xl outline-primary border border-primary p-1.5 rounded-sm"
           />
         </div>
-        <button type="submit" onClick={handleLoginBtn}>
+        <button
+          type="submit"
+          onClick={handleLoginBtn}
+          className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5 w-full "
+        >
           Submit
         </button>
-        <Link to="/signup">Signup</Link>
+        <button
+          type="submit"
+          onClick={handleGuestLoginBtn}
+          className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5 w-full "
+        >
+          Guest Login
+        </button>
+        <p>
+          Don't Have An Account ?
+          <Link to="/signup" className="text-lg text-primary">
+            Signup
+          </Link>
+        </p>
       </form>
     </article>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/authContext";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 export const Signup = () => {
   const [signUpDetails, setSignUpDetails] = useState({
     email: "",
@@ -15,6 +16,18 @@ export const Signup = () => {
 
   const { signUpHandler } = useAuth();
 
+  const handleSignupBtn = (e) => {
+    e.preventDefault();
+    if (
+      signUpDetails.email === "" &&
+      signUpDetails.password === "" &&
+      signUpDetails.username === ""
+    ) {
+      toast.error("Kindly fill all the fields!!");
+      return;
+    }
+    signUpHandler({ ...signUpDetails });
+  };
   return (
     <article className="bg-lightPrimary absolute inset-0 flex items-center justify-center">
       <form
@@ -64,10 +77,16 @@ export const Signup = () => {
             className="text-lg md:text-xl outline-primary border border-primary p-1.5 rounded-sm"
           />
         </div>
-        <button type="submit" onClick={signUpHandler}>
+        <button
+          type="submit"
+          onClick={handleSignupBtn}
+          className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5 w-full "
+        >
           Submit
         </button>
-        <Link to="/login">Login</Link>
+        <p>
+          Already Have An Account ? <Link to="/login">Login</Link>
+        </p>
       </form>
     </article>
   );

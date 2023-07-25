@@ -14,7 +14,7 @@ import { adressReducer } from "../reducers/adressReducer";
 import { toast } from "react-hot-toast";
 const initialAdressState = {
   adresses: [],
-  isEditModalOpen: true,
+  isEditModalOpen: false,
   editAdressId: null,
 };
 
@@ -29,12 +29,12 @@ export const AdressProvider = ({ children }) => {
   const { token } = useAuth();
   const dummyAdresses = [adress1, adress2];
   useEffect(() => {
+    if (!token) return;
     const getUserAdress = async () => {
       try {
         adressDispatch({ type: LOAD_ADRESS, payload: [...dummyAdresses] });
       } catch (error) {
         console.log(error);
-        toast.error("Something went wrong !!!");
       }
     };
     getUserAdress();
@@ -72,7 +72,6 @@ export const AdressProvider = ({ children }) => {
       adressDispatch({ type: SET_EDIT_ADRESS_ID, payload: adressId });
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong !!!");
     }
   };
   const openEditModal = ({ type }) => {

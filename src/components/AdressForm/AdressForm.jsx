@@ -4,11 +4,12 @@ import { useAdress } from "../../context/adressContext";
 export const AdressForm = ({ setSelectedAdress }) => {
   const { adresses, removeAdress, openEditModal, setEditAdressId } =
     useAdress();
+
   const handleEditClick = (id) => {
     setEditAdressId(id);
     openEditModal({ type: "edit-adress" });
   };
-  console.log({ adress: useAdress() });
+
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <h4 className="text-2xl mb-4">Adress Details</h4>
@@ -23,13 +24,26 @@ export const AdressForm = ({ setSelectedAdress }) => {
           <label htmlFor={`adress-${adress._id}`}>
             <h3> {adress.adress}</h3>
             <div className="">
-              <button onClick={() => handleEditClick(adress._id)}>Edit</button>
-              <button onClick={() => removeAdress(adress._id)}>Remove</button>
+              <button
+                onClick={() => handleEditClick(adress._id)}
+                className="w-max text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5  "
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => removeAdress(adress._id)}
+                className="w-max text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5  "
+              >
+                Remove
+              </button>
             </div>
           </label>
         </article>
       ))}
-      <button onClick={() => openEditModal({ type: "add-adress" })}>
+      <button
+        onClick={() => openEditModal({ type: "add-adress" })}
+        className="w-max text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5  "
+      >
         Add Adress
       </button>
     </form>

@@ -25,6 +25,7 @@ export const WishlistProvider = ({ children }) => {
   const navigate = useNavigate();
   const { token, loggedUser } = useAuth();
   useEffect(() => {
+    if (!token) return;
     const getUserWishlist = async () => {
       try {
         const {
