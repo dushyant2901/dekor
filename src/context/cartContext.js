@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useContext, useEffect, useReducer } from "react";
 import { useAuth } from "./authContext";
 import { ADD_TO_CART, LOAD_CART, REMOVE_FROM_CART } from "../utils/actions";
@@ -10,10 +9,9 @@ import {
 } from "../services/cartServices";
 import { cartReducer } from "../reducers/cartReducer";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 const initialCartState = {
   cart: [],
-  totalPrice: 0,
-  totalQuantity: 0,
 };
 
 const CartContext = React.createContext();
@@ -31,25 +29,17 @@ export const CartProvider = ({ children }) => {
         } = await getUserCartService(token);
         if (status === 200) {
           cartDispatch({ type: LOAD_CART, payload: cart });
-          console.log({ cart });
-          console.log("first");
         }
       } catch (e) {
-        console.error({
-          message: e.message,
-          code: e.code,
-          where: "getCartItemsHandler",
-        });
+        console.log(error);
       }
     };
     getUserCart();
-
-    console.log({ cartState });
   }, [token]);
 
   const addToCart = async (product) => {
     if (!loggedUser) {
-      navigate("/login");
+      toast.error("Kindly Login First !!!");
       return;
     }
     try {
@@ -59,9 +49,11 @@ export const CartProvider = ({ children }) => {
       } = await addToCartService(product, token);
       if (status === 201) {
         cartDispatch({ type: ADD_TO_CART, payload: product });
+        toast.success("Added To Cart !!!");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Something Went Wrong !!!");
     }
   };
   const removeFromCart = async (productId) => {
@@ -70,12 +62,13 @@ export const CartProvider = ({ children }) => {
         status,
         // data: { cart },
       } = await removeFromCartService(productId, token);
-      console.log({ status });
       if (status === 201 || status === 200) {
         cartDispatch({ type: REMOVE_FROM_CART, payload: productId });
+        toast.success("Removed From Cart !!!");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Something Went Wrong !!!");
     }
   };
   const updateCartItemQty = async (id, type) => {
@@ -86,9 +79,8 @@ export const CartProvider = ({ children }) => {
         console.log({ dataFetched });
         //  setCartData(dataFetched?.cart);
       }
-    } catch (e) {
-      console.error("Error:", e);
-      //  notifyToast("error", "An error occurred. Please try again later!");
+    } catch (error) {
+      toast.error("Something Went Wrong !!!");
     }
   };
 

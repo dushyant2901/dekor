@@ -20,3 +20,12 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const LOAD_WISHLIST = "LOAD_WISHLIST       ";
 export const ADD_TO_WISHLIST = "ADD_TO_WISHLIST";
 export const REMOVE_FROM_WISHLIST = "REMOVE_FROM_WISHLIST";
+
+export const LOAD_ADRESS = "LOAD_ADRESS";
+export const ADD_ADRESS = "ADD_ADRESS";
+export const EDIT_ADRESS = "EDIT_ADRESS";
+export const SET_EDIT_ADRESS_ID = "SET_EDIT_ADRESS_ID";
+export const REMOVE_ADRESS = "REMOVE_ADRESS";
+
+export const OPEN_EDIT_MODAL = "OPEN_EDIT_MODAL";
+export const CLOSE_EDIT_MODAL = "CLOSE_EDIT_MODAL";
