@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useContext, useEffect, useReducer } from "react";
 
 import {
@@ -20,6 +19,7 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
   GET_ALL_CATEGORIES,
 } from "../utils/actions";
+import { toast } from "react-hot-toast";
 
 const initialProductsState = {
   isSidebarOpen: false,
@@ -54,7 +54,9 @@ export const ProductsProvider = ({ children }) => {
         status,
         data: { products },
       } = await getAllProductsService();
-      productsDispatch({ type: GET_PRODUCTS_SUCCESS, payload: products });
+      if (status === 200) {
+        productsDispatch({ type: GET_PRODUCTS_SUCCESS, payload: products });
+      }
     } catch (error) {
       productsDispatch({ type: GET_PRODUCTS_ERROR });
     }
@@ -67,21 +69,26 @@ export const ProductsProvider = ({ children }) => {
         data: { product: singleProduct },
         status,
       } = await getProductService(productID);
-      productsDispatch({
-        type: GET_SINGLE_PRODUCT_SUCCESS,
-        payload: singleProduct,
-      });
+      if (status === 200) {
+        productsDispatch({
+          type: GET_SINGLE_PRODUCT_SUCCESS,
+          payload: singleProduct,
+        });
+      }
     } catch (error) {
       productsDispatch({ type: GET_SINGLE_PRODUCT_ERROR });
+      toast.error("Something Went Wrong !!!");
     }
   };
   const fetchAllCategories = async () => {
     try {
       const {
-        res,
+        status,
         data: { categories },
       } = await getAllCategoriesService();
-      productsDispatch({ type: GET_ALL_CATEGORIES, payload: categories });
+      if (status === 200) {
+        productsDispatch({ type: GET_ALL_CATEGORIES, payload: categories });
+      }
     } catch (error) {
       console.log(error);
     }

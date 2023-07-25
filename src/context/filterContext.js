@@ -7,6 +7,7 @@ import {
 } from "../utils/actions";
 import { filterReducer } from "../reducers/filterReducer";
 import { useProducts } from "./productContext";
+import { toast } from "react-hot-toast";
 const initialFilterState = {
   allProducts: [],
   filteredProducts: [],
@@ -55,6 +56,7 @@ export const FilterProvider = ({ children }) => {
   };
   const clearFilters = () => {
     filterDispatch({ type: CLEAR_FILTERS });
+    toast.success("All Filters Cleared !!!");
   };
   return (
     <FilterContext.Provider
