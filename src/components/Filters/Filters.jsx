@@ -1,7 +1,6 @@
 import React from "react";
 import { useFilter } from "../../context/filterContext";
 import { useProducts } from "../../context/productContext";
-import { formatPrice } from "../../utils/helpers";
 export const Filters = () => {
   const { filters, updateFilters, clearFilters } = useFilter();
   const { categories } = useProducts();
@@ -67,7 +66,7 @@ export const Filters = () => {
           {/* price */}
           <div className="my-3">
             <h5 className="text-xl mb-1.5 md:mb-2 md:text-2xl">Price</h5>
-            <p className="price">{formatPrice(price)}</p>
+            <p className="price">{price}</p>
             <input
               type="range"
               name="price"
