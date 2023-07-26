@@ -21,7 +21,7 @@ export const Products = () => {
               Something went wrong!!!
             </p>
           )}
-          {!isLoading && error && products?.length === 0 && (
+          {!isLoading && !error && products?.length === 0 && (
             <p className="text-3xl text-center text-red-500">
               No Products Found !!!
             </p>
