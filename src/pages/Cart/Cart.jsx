@@ -16,9 +16,11 @@ export const Cart = () => {
       <h4 className="text-center my-6 text-3xl">Your Cart</h4>
 
       {cart?.length === 0 && (
-        <article className="w-11/12 md:container mx-auto flex justify-center">
-          <p>No Items In The Cart !!!</p>
-          <Link to="/products">Shop Now</Link>
+        <article className="w-11/12 md:container mx-auto flex justify-center flex-col gap-4 items-center">
+          <p className="text-xl">No Items In The Cart !!!</p>
+          <Link to="/products" className="bg-primary text-white py-2 px-4">
+            Shop Now
+          </Link>
         </article>
       )}
 

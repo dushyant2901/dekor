@@ -51,10 +51,10 @@ export const WishlistProvider = ({ children }) => {
     try {
       const {
         status,
-        // data: { wishlist },
+        data: { wishlist },
       } = await addToWishlistService(product, token);
       if (status === 201) {
-        wishlistDispatch({ type: ADD_TO_WISHLIST, payload: product });
+        wishlistDispatch({ type: ADD_TO_WISHLIST, payload: wishlist });
         toast.success("Added To Wishlist !!!");
       }
     } catch (error) {
@@ -66,11 +66,11 @@ export const WishlistProvider = ({ children }) => {
     try {
       const {
         status,
-        // data: { wishlist },
+        data: { wishlist },
       } = await removeFromWishlistService(productId, token);
       console.log({ status });
       if (status === 201 || status === 200) {
-        wishlistDispatch({ type: REMOVE_FROM_WISHLIST, payload: productId });
+        wishlistDispatch({ type: REMOVE_FROM_WISHLIST, payload: wishlist });
         toast.success("Removed From Wishlist !!!");
       }
     } catch (error) {

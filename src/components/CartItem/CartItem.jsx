@@ -8,7 +8,7 @@ export const CartItem = ({ cartItem, minDetail }) => {
   const { removeFromCart, updateCartItemQty } = useCart();
   const { addToWishlist, wishlist } = useWishlist();
   const handleDecrementBtn = () => {
-    qty > 1 ? updateCartItemQty(_id, "decrement") : removeFromCart(_id);
+    qty === 1 ? removeFromCart(_id) : updateCartItemQty(_id, "decrement");
   };
   const handleMoveToWishlistBtn = () => {
     removeFromCart(_id);
@@ -33,7 +33,10 @@ export const CartItem = ({ cartItem, minDetail }) => {
           <p className="text-2xl">{qty}</p>
           <button
             className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-2 py-1 w-full "
-            onClick={() => updateCartItemQty(_id, "increment")}
+            onClick={(e) => {
+              e.preventDefault();
+              updateCartItemQty(_id, "increment");
+            }}
           >
             <FaPlus />
           </button>

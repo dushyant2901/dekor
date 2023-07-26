@@ -5,7 +5,7 @@ import { useCart } from "../../context/cartContext";
 import { useWishlist } from "../../context/wishlistContext";
 import { isAlreadyInCart, isAlreadyInWishlist } from "../../utils/helpers";
 export const ProductCard = (product) => {
-  const { name, image, _id: id, price, rating } = product;
+  const { name, image, _id: id, price, rating } = product ?? {};
   const { cart, addToCart } = useCart();
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
 
@@ -25,8 +25,8 @@ export const ProductCard = (product) => {
           type="wishlist"
           className="absolute top-3 right-3 text-2xl text-red-500 z-20"
           onClick={(e) => {
+            e.preventDefault();
             removeFromWishlist(id);
-            e.stopPropagation();
           }}
         >
           <MdFavorite />
@@ -35,8 +35,8 @@ export const ProductCard = (product) => {
         <button
           className="absolute top-3 right-3 text-2xl z-20"
           onClick={(e) => {
+            e.preventDefault();
             addToWishlist(product);
-            e.stopPropagation();
           }}
           type="wishlist"
         >
@@ -70,7 +70,10 @@ export const ProductCard = (product) => {
       ) : (
         <button
           className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5 w-full  "
-          onClick={() => addToCart(product)}
+          onClick={(e) => {
+            e.preventDefault();
+            addToCart(product);
+          }}
         >
           Add to Cart
         </button>
