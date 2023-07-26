@@ -51,7 +51,7 @@ export const SingleProduct = () => {
 
               <div className="my-4 flex gap-5">
                 {isAlreadyInCart(cart, productId) ? (
-                  <LinkButton text="Go to Cart" />
+                  <LinkButton text="Go to Cart" to="/cart" />
                 ) : (
                   <button
                     onClick={() => addToCart(product)}
