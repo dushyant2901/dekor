@@ -9,7 +9,7 @@ export const getUserWishlistService = async (encodedToken) =>
 
 export const addToWishlistService = async (product, encodedToken) =>
   await axios.post(
-    `/api/user/cart`,
+    `/api/user/wishlist`,
     { product },
     {
       headers: {

@@ -16,14 +16,14 @@ export const wishlistReducer = (state, { type, payload }) => {
     console.log({ payload, from: "add to wishlist" });
     return {
       ...state,
-      wishlist: [...state.wishlist, payload],
+      wishlist: payload,
     };
   }
   if (type === REMOVE_FROM_WISHLIST) {
     console.log({ payload, from: "remove from wishlist" });
     return {
       ...state,
-      wishlist: state.wishlist.filter(({ _id }) => _id !== payload),
+      wishlist: payload,
     };
   }
 

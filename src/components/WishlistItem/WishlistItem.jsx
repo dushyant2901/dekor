@@ -4,17 +4,17 @@ import { useWishlist } from "../../context/wishlistContext";
 import { LinkButton } from "../LinkButton/LinkButton";
 import { isAlreadyInCart } from "../../utils/helpers";
 export const WishlistItem = ({ wishlistItem }) => {
-  const { _id: productId, image, name, price } = wishlistItem;
+  const { _id: productId, image, name, price } = wishlistItem ?? {};
   const { removeFromWishlist } = useWishlist();
-  const { addToCart, cart } = useCart();
+  const { addToCart, cart, updateCartItemQty } = useCart();
 
-  // const handleAddToCartBtn = (e) => {
-  //   if (isAlreadyInCart(cart, _id)) {
-  //     //toast
-  //     return;
-  //   }
-  //   addToCart(wishlistItem);
-  // };
+  const handleMoveToCartBtn = (e) => {
+    e.preventDefault();
+    isAlreadyInCart(cart, productId)
+      ? updateCartItemQty(productId, "increment")
+      : addToCart(wishlistItem);
+    removeFromWishlist(productId);
+  };
 
   return (
     <article className="flex gap-5 items-center bg-lightPrimary border border-primary rounded-md shadow-sm justify-between px-6">
@@ -22,19 +22,32 @@ export const WishlistItem = ({ wishlistItem }) => {
       <h3>{name}</h3>
       <h3>{price}</h3>
 
-      {isAlreadyInCart(cart, productId) ? (
+      <button
+        className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-2 py-1  "
+        onClick={handleMoveToCartBtn}
+      >
+        Move To Cart
+      </button>
+
+      {/* {isAlreadyInCart(cart, productId) ? (
         <LinkButton text="Go to Cart" to="/cart" />
       ) : (
         <button
           className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-2 py-1  "
-          onClick={() => addToCart(wishlistItem)}
+          onClick={(e) => {
+            e.preventDefault();
+            addToCart(wishlistItem);
+          }}
         >
           Add To Cart
         </button>
-      )}
+      )} */}
       <button
         className="text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-2 py-1  "
-        onClick={() => removeFromWishlist(productId)}
+        onClick={(e) => {
+          e.preventDefault();
+          removeFromWishlist(productId);
+        }}
       >
         Remove
       </button>
