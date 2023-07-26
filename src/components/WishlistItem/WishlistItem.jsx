@@ -2,13 +2,12 @@ import React from "react";
 import { useCart } from "../../context/cartContext";
 import { useWishlist } from "../../context/wishlistContext";
 import { LinkButton } from "../LinkButton/LinkButton";
-
+import { isAlreadyInCart } from "../../utils/helpers";
 export const WishlistItem = ({ wishlistItem }) => {
   const { _id: productId, image, name, price } = wishlistItem;
   const { removeFromWishlist } = useWishlist();
   const { addToCart, cart } = useCart();
-  const isAlreadyInCart = (cart, productId) =>
-    cart?.some(({ _id }) => _id === productId);
+
   // const handleAddToCartBtn = (e) => {
   //   if (isAlreadyInCart(cart, _id)) {
   //     //toast

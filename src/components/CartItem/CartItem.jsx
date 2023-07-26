@@ -8,7 +8,7 @@ export const CartItem = ({ cartItem, minDetail }) => {
   const { removeFromCart, updateCartItemQty } = useCart();
   const { addToWishlist, wishlist } = useWishlist();
   const handleDecrementBtn = () => {
-    qty > 1 ? updateCartItemQty(_id, "decrement") : removeFromCart(_id);
+    qty < 1 ? removeFromCart(_id) : updateCartItemQty(_id, "decrement");
   };
   const handleMoveToWishlistBtn = () => {
     removeFromCart(_id);
