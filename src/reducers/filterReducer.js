@@ -31,7 +31,7 @@ export const filterReducer = (state, { type, payload }) => {
     let _products = [...allProducts];
     if (text) {
       _products = _products?.filter((product) =>
-        product.name.toLowerCase().startsWith(text)
+        product.name.toLowerCase().includes(text.toLowerCase())
       );
     }
     if (category !== "all") {
