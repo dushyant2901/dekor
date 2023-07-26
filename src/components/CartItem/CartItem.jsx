@@ -14,6 +14,7 @@ export const CartItem = ({ cartItem, minDetail }) => {
       <img src={image} alt="" className="h-32" />
       <h3>{name}</h3>
       <h3>{price}</h3>
+      {minDetail && <p className="text-2xl">{qty}</p>}
       {!minDetail && (
         <div className="flex gap-3">
           <button

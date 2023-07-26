@@ -6,7 +6,7 @@ export const Loader = () => {
         size={50}
         thickness={180}
         speed={136}
-        color="#0d9488"
+        color="#FF7733"
         secondaryColor={"rgba(0, 0, 0, 0.3)"}
       />
     </div>

@@ -13,7 +13,7 @@ export const Products = () => {
   const { filteredProducts: products } = useFilter();
   console.log({ categories });
   return (
-    <main className="w-11/12 md:container mx-auto flex flex-col md:flex-row py-10 ">
+    <main className="w-11/12 md:container mx-auto flex flex-col md:flex-row py-2 ">
       <aside className="min-w-[15rem]  h-screen ">
         <Filters />
       </aside>
