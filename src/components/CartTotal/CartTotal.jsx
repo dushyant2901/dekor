@@ -1,6 +1,6 @@
 import React from "react";
 import { useCart } from "../../context/cartContext";
-
+import { formatPrice } from "../../utils/helpers";
 export const CartTotal = () => {
   const { cart } = useCart();
   const getTotalPrice = () =>
@@ -9,7 +9,7 @@ export const CartTotal = () => {
     <article className="bg-primary border text-white border-primary rounded-sm p-4 shadow-md flex gap-4 flex-col w-max ml-auto my-4">
       <div className="flex gap-4 justify-center items-centers">
         <h3 className="text-xl">Total Price :</h3>
-        <p>Rs {getTotalPrice()}</p>
+        <p>Rs {formatPrice(getTotalPrice())}</p>
       </div>
     </article>
   );

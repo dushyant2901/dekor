@@ -1,6 +1,7 @@
 import React from "react";
 import { useFilter } from "../../context/filterContext";
 import { useProducts } from "../../context/productContext";
+import { formatPrice } from "../../utils/helpers";
 export const Filters = () => {
   const { filters, updateFilters, clearFilters } = useFilter();
   const { categories } = useProducts();
@@ -10,7 +11,7 @@ export const Filters = () => {
   ];
   const { category, rating, minPrice, price, maxPrice } = filters ?? {};
   const ratings = ["all", "1", "2", " 3", "4", " 5"];
-  const formatPrice = (val) => val;
+
   return (
     <>
       <div className="w-2/3 md:w-auto  ">
