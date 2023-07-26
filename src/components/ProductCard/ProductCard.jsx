@@ -12,7 +12,7 @@ export const ProductCard = (product) => {
   const navigate = useNavigate();
 
   const handleCardClick = (e) => {
-    e.stopPropagation();
+    e.preventDefault();
     if (e.target.type !== "wishlist") {
       navigate(`/products/${id}`);
     }
@@ -23,18 +23,20 @@ export const ProductCard = (product) => {
       {isAlreadyInWishlist(wishlist, id) ? (
         <button
           type="wishlist"
-          className="absolute top-3 right-3 text-2xl text-red-500 p-3"
+          className="absolute top-3 right-3 text-2xl text-red-500 z-20"
           onClick={(e) => {
             removeFromWishlist(id);
+            e.stopPropagation();
           }}
         >
           <MdFavorite />
         </button>
       ) : (
         <button
-          className="absolute top-3 right-3 text-2xl p-3"
+          className="absolute top-3 right-3 text-2xl z-20"
           onClick={(e) => {
             addToWishlist(product);
+            e.stopPropagation();
           }}
           type="wishlist"
         >

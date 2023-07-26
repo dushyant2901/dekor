@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import BannerImg from "../../assets/banner.jpg";
 import { LinkButton } from "../LinkButton/LinkButton";
 export const Banner = () => {
@@ -16,7 +15,7 @@ export const Banner = () => {
           aperiam odio ducimus, obcaecati libero et quia tempora excepturi quis
           alias?
         </p>
-        <LinkButton text="Shop Now" url="/products" />
+        <LinkButton text="Shop Now" to="/products" />
       </article>
       <article className="hidden md:block md:w-1/2 overflow-hidden h-[50rem] ">
         <img src={BannerImg} alt="banner" />

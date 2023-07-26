@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
         navigate(location?.state?.from?.pathname || "/products", {
           replace: true,
         });
+        toast.success("Succesfully Logged In !!!");
       } else {
         toast.error("Something went wrong !!!");
       }

@@ -5,10 +5,12 @@ import { CartItem } from "../../components/CartItem/CartItem";
 import { CartTotal } from "../../components/CartTotal/CartTotal";
 import { LinkButton } from "../../components";
 import { useAuth } from "../../context/authContext";
+import { useWishlist } from "../../context/wishlistContext";
 
 export const Cart = () => {
   const { cart } = useCart();
   const { loggedUser } = useAuth();
+
   return (
     <main>
       <h4 className="text-center my-6 text-3xl">Your Cart</h4>
