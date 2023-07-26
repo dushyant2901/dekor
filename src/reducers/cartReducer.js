@@ -17,14 +17,15 @@ export const cartReducer = (state, { type, payload }) => {
     console.log({ payload, from: "add to cart" });
     return {
       ...state,
-      cart: [...state.cart, { ...payload, qty: 1 }],
+      cart: payload,
     };
   }
   if (type === REMOVE_FROM_CART) {
     console.log({ payload, from: "remove from cart" });
     return {
       ...state,
-      cart: state.cart.filter(({ _id }) => _id !== payload),
+      cart: payload,
+      // cart: state.cart.filter(({ _id }) => _id !== payload),
     };
   }
   if (type === UPDATE_CART_QTY) {

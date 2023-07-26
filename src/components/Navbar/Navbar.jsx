@@ -41,7 +41,7 @@ export const Navbar = () => {
             placeholder="search"
             onChange={updateFilters}
             className="w-64 p-1 border border-primary outline-none
-              text-md text-black font-bold mb-3 md:mb-6"
+              text-md text-black font-bold "
           />
           <div className="hidden md:flex md:items-center">
             <CartButtons />

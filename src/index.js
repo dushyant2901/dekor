@@ -7,11 +7,11 @@ import { makeServer } from "./server";
 import { ProductsProvider } from "./context/productContext";
 import { FilterProvider } from "./context/filterContext";
 import { AuthProvider } from "./context/authContext";
-import { CartProvider } from "./context/cartContext";
-import { WishlistProvider } from "./context/wishlistContext";
+import { CartProvider, useCart } from "./context/cartContext";
+import { WishlistProvider, useWishlist } from "./context/wishlistContext";
 import { AdressProvider } from "./context/adressContext";
 makeServer();
-
+export { useCart, useWishlist };
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

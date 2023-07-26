@@ -10,6 +10,7 @@ import {
 import { filterReducer } from "../reducers/filterReducer";
 import { useProducts } from "./productContext";
 import { toast } from "react-hot-toast";
+import { useAuth } from "./authContext";
 const initialFilterState = {
   allProducts: [],
   filteredProducts: [],
@@ -33,6 +34,7 @@ export const FilterProvider = ({ children }) => {
     filterReducer,
     initialFilterState
   );
+  const { token } = useAuth();
   useEffect(() => {
     filterDispatch({ type: LOAD_PRODUCTS, payload: products });
   }, [products]);
@@ -41,7 +43,9 @@ export const FilterProvider = ({ children }) => {
     filterDispatch({ type: FILTER_PRODUCTS });
     filterDispatch({ type: SORT_PRODUCTS });
   }, [filterState?.filters, filterState?.sort]);
-
+  useEffect(() => {
+    clearFilters();
+  }, [token]);
   const updateFilters = (e) => {
     let { name, value } = e.target;
     if (name === "category") {

@@ -22,8 +22,8 @@ export const AdressForm = ({ setSelectedAdress }) => {
             id={`adress-${adress._id}`}
           />
           <label htmlFor={`adress-${adress._id}`}>
-            <h3> {adress.adress}</h3>
-            <div className="">
+            <h3 className="text-lg"> {adress.adress}</h3>
+            <div className="flex gap-4 my-2">
               <button
                 onClick={() => handleEditClick(adress._id)}
                 className="w-max text-white bg-primary hover:opacity-90  rounded-lg text-md md:text-lg px-5 py-1.5  "

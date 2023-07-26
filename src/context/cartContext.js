@@ -51,10 +51,10 @@ export const CartProvider = ({ children }) => {
     try {
       const {
         status,
-        // data: { cart },
+        data: { cart },
       } = await addToCartService(product, token);
       if (status === 200 || status === 201) {
-        cartDispatch({ type: ADD_TO_CART, payload: product });
+        cartDispatch({ type: ADD_TO_CART, payload: cart });
         toast.success("Added To Cart !!!");
       }
     } catch (error) {
@@ -66,10 +66,10 @@ export const CartProvider = ({ children }) => {
     try {
       const {
         status,
-        // data: { cart },
+        data: { cart },
       } = await removeFromCartService(productId, token);
       if (status === 201 || status === 200) {
-        cartDispatch({ type: REMOVE_FROM_CART, payload: productId });
+        cartDispatch({ type: REMOVE_FROM_CART, payload: cart });
         toast.success("Removed From Cart !!!");
       }
     } catch (error) {

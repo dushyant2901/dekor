@@ -29,3 +29,12 @@ export const guestLoginDetails = {
   email: "dushyant@gmail.com",
   password: "dushyant",
 };
+export const guestSignupDetails = {
+  email: `rajat${parseInt(Math.random() * 1000)}@gmail.com`,
+  username: `rajat${parseInt(Math.random() * 1000)}`,
+  password: "12345",
+  firstname: "Rajat",
+  lastname: "Sharma",
+  confirmPassword: "12345",
+  hideIcon: { password: true, confirmPassword: true },
+};
