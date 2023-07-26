@@ -11,7 +11,7 @@ export const Products = () => {
     return () => {
       clearFilters();
     };
-  }, [third]);
+  }, []);
 
   return (
     <main className="w-11/12 md:container mx-auto flex flex-col md:flex-row py-2 ">
