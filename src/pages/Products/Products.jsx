@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Filters, Loader, ProductCard } from "../../components";
 import { useProducts } from "../../context/productContext";
 import { useFilter } from "../../context/filterContext";
@@ -6,7 +6,13 @@ import { Sort } from "../../components/Sort/Sort";
 
 export const Products = () => {
   const { productsLoading: isLoading, productsError: error } = useProducts();
-  const { filteredProducts: products } = useFilter();
+  const { filteredProducts: products, clearFilters } = useFilter();
+  useEffect(() => {
+    return () => {
+      clearFilters();
+    };
+  }, [third]);
+
   return (
     <main className="w-11/12 md:container mx-auto flex flex-col md:flex-row py-2 ">
       <aside className="min-w-[15rem]  h-screen ">
